@@ -24,7 +24,7 @@ Utiliza a api do climatempo, e tem a configuração definida no arquivo
     ]
   },
   "rega":{
-    "tempo":"120",
+    "tempo":"60",
     "step":"3",
     "start":"10"
   }
@@ -36,6 +36,8 @@ Utiliza a api do climatempo, e tem a configuração definida no arquivo
 **mysql**: configurações do banco de dados mysql
 
 **gpio**: configurações do numero de porta do sensor de temperatura + umidade e das portas dos relés que serão ativados
+
+**rega**: (tempo) tempo em segundos padrão de rega; (step) incremento no tempo com base na temperatura/humidade; (start) valor inicial para parametrização de variação temporal da rega com base na temperatura/humidade
 
 **crontab:**
 ```
