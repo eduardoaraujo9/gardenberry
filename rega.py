@@ -3,7 +3,13 @@
 import json
 import requests
 import mysql.connector as mysql
-configFile = open(".config.json")
+import inspect
+import os
+
+filename = inspect.getframeinfo(inspect.currentframe()).filename
+path = os.path.dirname(os.path.abspath(filename))
+
+configFile = open(path + "/.config.json")
 config = json.loads(configFile.read())
 
 conn = mysql.connect(host=config["mysql"]["host"],user=config["mysql"]["user"],password=config["mysql"]["pass"],database=config["mysql"]["db"])
