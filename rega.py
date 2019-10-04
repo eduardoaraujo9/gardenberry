@@ -16,7 +16,7 @@ conn = mysql.connect(host=config["mysql"]["host"],user=config["mysql"]["user"],p
 sql = conn.cursor()
 
 def rega(tempo):
-	#sql.execute("INSERT IGNORE INTO gardenberry.regas (datahora, tempo) VALUES (NOW(), " + tempo + ");")
+	sql.execute("INSERT IGNORE INTO gardenberry.regas (datahora, tempo) VALUES (NOW(), " + tempo + ");")
 	print("Regar: " + tempo + " seg")
 
 try:
