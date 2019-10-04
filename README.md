@@ -6,10 +6,13 @@ Utiliza a api do climatempo, e tem a configuração definida no arquivo
 .config.json
 ```
 {
-  "api":{
-    "id":"3477",
-    "token":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-  },
+  "api":[
+    { "id":"3477",
+      "token":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
+    { "id":"3791",
+      "token":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+  ],
+
   "mysql":{
     "host":"127.0.0.1",
     "user":"gardenberry",
@@ -31,7 +34,7 @@ Utiliza a api do climatempo, e tem a configuração definida no arquivo
 }
 ```
 
-**api**: configurações da API do climatempo
+**api**: configurações da API do climatempo, (id) corresponde ao locale. Suporte a multiplos tokens.
 
 **mysql**: configurações do banco de dados mysql
 
