@@ -21,7 +21,7 @@ for api in config["api"]:
 	res = requests.get(url)
 	r = json.loads(res.text)
 	try:
-		sql.execute("REPLACE INTO gardenberry.tempo (datahora,umidade,temperatura,precipitacao,fonte) VALUES (CONCAT(LEFT(NOW(),14),'00:00'),'" + str(r["data"]["humidity"]) + "','" + str(r["data"]["temperature"]) + "',IF(LEFT('3n',1)>2 AND LEFT('8n',1)<9,(SELECT precipitacao FROM gardenberry.previsao WHERE datahora = CONCAT(LEFT(NOW(),14),'00:00')),0)," + str(api["id"]) + ");")
+		print("REPLACE INTO gardenberry.tempo (datahora,umidade,temperatura,precipitacao,fonte) VALUES (CONCAT(LEFT(NOW(),14),'00:00'),'" + str(r["data"]["humidity"]) + "','" + str(r["data"]["temperature"]) + "',IF(LEFT('3n',1)>2 AND LEFT('8n',1)<9,(SELECT precipitacao FROM gardenberry.previsao WHERE datahora = CONCAT(LEFT(NOW(),14),'00:00') AND fonte = '" + str(api["id"]) + "'),0)," + str(api["id"]) + ");")
 	except sql.Error as error:
 		print("Error: {}".format(error))
 
