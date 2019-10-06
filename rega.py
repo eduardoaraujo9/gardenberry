@@ -5,6 +5,8 @@ import requests
 import mysql.connector as mysql
 import inspect
 import os
+import RPi.GPIO as GPIO
+import time
 
 filename = inspect.getframeinfo(inspect.currentframe()).filename
 path = os.path.dirname(os.path.abspath(filename))
@@ -16,8 +18,14 @@ conn = mysql.connect(host=config["mysql"]["host"],user=config["mysql"]["user"],p
 sql = conn.cursor()
 
 def rega(tempo):
+	if int(tempo) > 0:
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setup(config["gpio"]["rele"],GPIO.OUT)
+		GPIO.setup(config["gpio"]["rele"],GPIO.LOW)
+		time.sleep(int(tempo))
+		GPIO.setup(config["gpio"]["rele"],GPIO.HIGH)
 	sql.execute("INSERT IGNORE INTO gardenberry.regas (datahora, tempo) VALUES (NOW(), " + tempo + ");")
-	print("Regar: " + tempo + " seg")
+	print("Regou: " + tempo + " seg")
 
 try:
 	sql.execute("SELECT ROUND(SUM(precipitacao)/" + str(len(config["api"])) + ",1) AS precipitacoes,ROUND(AVG(temperatura),1) AS temperaturas, ROUND(AVG(umidade),0) AS umidades, \
@@ -53,7 +61,7 @@ try:
 		print("t\tconf.t\tm_t1\tm_u1\tm_t2\tm_f")
 		print(str(t) + "\t" + str(config["rega"]["tempo"]) + "\t" + str(modt1) + "\t" + str(modu1) + "\t" + str(modt2) + "\t" + str(modf))
 		print(r)
-	if t < 0:
+	if t < 5:
 		t = 0
 # ideia futura, reduzir o tempo da rega matinal (validar acompanhando os logs)
 #	elif int(r["hora"]) < 12:
