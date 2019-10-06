@@ -21,11 +21,11 @@ def rega(tempo):
 	if int(tempo) > 0:
 		GPIO.setmode(GPIO.BCM)
 		for rele in config["gpio"]["rele"]:
-			GPIO.setup(rele,GPIO.OUT)
-			GPIO.setup(rele,GPIO.LOW)
+			GPIO.setup(int(rele),GPIO.OUT)
+			GPIO.setup(int(rele),GPIO.LOW)
 		time.sleep(int(tempo))
 		for rele in config["gpio"]["rele"]:
-			GPIO.setup(rele,GPIO.HIGH)
+			GPIO.setup(int(rele),GPIO.HIGH)
 	sql.execute("INSERT IGNORE INTO gardenberry.regas (datahora, tempo) VALUES (NOW(), " + tempo + ");")
 	print("Regou: " + tempo + " seg")
 
