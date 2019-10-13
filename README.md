@@ -58,3 +58,16 @@ Utiliza a api do climatempo, e tem a configuração definida no arquivo
 5 6,18 * * * /home/pi/gardenberry/rega.log && /home/pi/gardenberry/rega.py
 ```
 
+## Fotos do projeto
+
+Com o Raspberry PI (zero W) conectado à placa de relés:
+
+![Rasbperry PI](https://github.com/eduardoaraujo9/gardenberry/raw/master/gardenberry.gif)
+
+Ativar o relé (luz vermelha) com base nos cálculos em Python/SQL liga a solenóide e permite a vazão da água na mangueira:
+
+![Solenoide](https://github.com/eduardoaraujo9/gardenberry/raw/master/solenoide.PNG)
+
+E os micro-aspersores enfiados na mangueira são responsáveis pela rega das plantas!
+
+![micro-aspersores](https://github.com/eduardoaraujo9/gardenberry/raw/master/rega.gif)
