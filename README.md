@@ -6,7 +6,7 @@ A temperatura futura funciona como um multiplicador que modifica o tempo de rega
 
 Utiliza a api do climatempo, e tem a configuração definida no arquivo
 .config.json
-```
+```json
 {
   "api":[
     { "id":"3477",
@@ -57,3 +57,4 @@ Utiliza a api do climatempo, e tem a configuração definida no arquivo
 1 * * * * /home/pi/gardenberry/tempo.py
 5 6,18 * * * /home/pi/gardenberry/rega.log && /home/pi/gardenberry/rega.py
 ```
+
