@@ -1,6 +1,6 @@
 # Gardenberry
 
-## Intenção
+## Propósito
 
 Compor um projeto simples para meu Raspberry efetuar regas automáticas no jardim com base na previsão do tempo (e no estado atual do tempo).
 
@@ -8,8 +8,7 @@ A temperatura futura funciona como um multiplicador que modifica o tempo de rega
 
 ## Configuração
 
-Utiliza a api do climatempo, e tem a configuração definida no arquivo
-.config.json
+Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as temperaturas e previsões próximas de casa, e tem a configuração definida no arquivo `.config.json`
 ```json
 {
   "api":[
