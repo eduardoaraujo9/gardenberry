@@ -71,6 +71,6 @@ Ativar o relé (luz vermelha) com base nos cálculos em Python/SQL liga a solen�
 
 ![Solenoide](https://github.com/eduardoaraujo9/gardenberry/raw/master/solenoide.PNG)
 
-E os micro-aspersores enfiados na mangueira são responsáveis pela rega das plantas!
+E os micro-aspersores com controle de fluxo enfiados na mangueira são responsáveis pela rega das plantas!
 
 ![micro-aspersores](https://github.com/eduardoaraujo9/gardenberry/raw/master/rega.gif)
