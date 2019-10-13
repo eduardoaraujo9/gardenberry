@@ -52,7 +52,7 @@ Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as 
 
 **gpio**: configurações do numero de porta do sensor de temperatura + umidade e das portas dos relés que serão ativados
 
-**rega**: (tempo) tempo em segundos padrão de rega; (maximo) tempo limite para rega; (step) incremento no tempo com base na temperatura/umidade; (start) valor inicial para parametrização de variação temporal da rega com base na temperatura/umidade
+**rega**: (tempo) tempo em segundos padrão de rega; (maximo) tempo limite para rega; (step) incremento no tempo com base na temperatura/umidade; (start) valor inicial para parametrização de variação temporal da rega com base na temperatura/umidade. Para desabilitar os modificadores é só utilizar `start 100` e `step 0`
 
 **crontab:** é preciso configurar os scripts para execução na crontab.
 ```
