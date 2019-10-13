@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Servidor:                     192.168.0.x
+-- Servidor:                     192.168.0.5
 -- Versão do servidor:           10.3.17-MariaDB-0+deb10u1 - Raspbian 10
 -- OS do Servidor:               debian-linux-gnueabihf
 -- HeidiSQL Versão:              10.2.0.5599
@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS `previsao` (
   `datahora` datetime NOT NULL,
   `precipitacao` float NOT NULL,
   `temperatura` float NOT NULL,
-  PRIMARY KEY (`datahora`)
+  `fonte` int(11) NOT NULL,
+  PRIMARY KEY (`datahora`,`fonte`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Exportação de dados foi desmarcado.
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `tempo` (
   `umidade` float NOT NULL,
   `temperatura` float NOT NULL,
   `precipitacao` float DEFAULT 0,
-  `fonte` tinyint(4) NOT NULL,
+  `fonte` smallint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`datahora`,`fonte`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
