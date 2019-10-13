@@ -39,7 +39,7 @@ try:
 	sql.execute("SELECT ROUND(AVG(precipitacao),1) AS precipitacoes,ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) AS temperaturas, ROUND(AVG(umidade),0) AS umidades, \
 		(SELECT ROUND(AVG(precipitacao),1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)) AS fut_precipitacoes, \
 		(SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)) AS fut_temperaturas, \
-		ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 11 HOUR) AND NOW()),0),0) AS rega, \
+		ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 20 HOUR) AND NOW()),0),0) AS rega, \
 		HOUR(NOW()) AS hora \
 		FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL IF(HOUR(NOW())<12,12,24) HOUR) AND NOW();")
 	r = sql.fetchone()
@@ -76,6 +76,8 @@ try:
 		print(r)
 	if t < 5:
 		t = 0
+	if t > config["rega"]["maximo"]:
+		t = config["rega"]["maximo"]
 	rega(str(t))
 except sql.Error as error:
 	print("Error: {}".format(error))
