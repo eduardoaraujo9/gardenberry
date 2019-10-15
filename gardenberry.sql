@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Servidor:                     192.168.0.5
+-- Servidor:                     192.168.0.x
 -- Versão do servidor:           10.3.17-MariaDB-0+deb10u1 - Raspbian 10
 -- OS do Servidor:               debian-linux-gnueabihf
 -- HeidiSQL Versão:              10.2.0.5599
