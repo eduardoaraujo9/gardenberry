@@ -6,6 +6,8 @@ Compor um projeto simples para meu Raspberry efetuar regas automáticas no jardi
 
 A temperatura futura funciona como um multiplicador que modifica o tempo de rega padrão, mais calor regará por mais tempo e um clima ameno regará por menos tempo. A umidade também causa o mesmo princípio.
 
+A parte complexa, alem de definir o tempo padrao de rega, e efetuar o ajuste fino do step e valor de start dos modificadores, para auxiliar a simulacao montei uma planilha `rega regra.xls` que simula o calculo e a visualizacao dos valores que serao obtidos para cada faixa de temperatura / umidade.
+
 ## Configuração
 
 Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as temperaturas e previsões próximas de casa, e tem a configuração definida no arquivo `.config.json`
@@ -50,7 +52,7 @@ Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as 
 
 **mysql**: configurações do banco de dados mysql
 
-**gpio**: configurações do numero de porta do sensor de temperatura + umidade e das portas dos relés que serão ativados
+**gpio**: configurações do numero de porta do sensor de temperatura + umidade e das portas dos relés que serão ativados.
 
 **rega**: (tempo) tempo em segundos padrão de rega; (maximo) tempo limite para rega; (step) incremento no tempo com base na temperatura/umidade; (start) valor inicial para parametrização de variação temporal da rega com base na temperatura/umidade. Para desabilitar os modificadores é só utilizar `start 100` e `step 0`
 
