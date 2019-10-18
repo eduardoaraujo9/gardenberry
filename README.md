@@ -6,7 +6,7 @@ Compor um projeto simples para meu Raspberry efetuar regas automáticas no jardi
 
 A temperatura futura funciona como um multiplicador que modifica o tempo de rega padrão, mais calor regará por mais tempo e um clima ameno regará por menos tempo. A umidade também causa o mesmo princípio.
 
-A parte complexa, além de definir o tempo padrão de rega, é efetuar o ajuste fino do step e valor de start dos modificadores. Para auxiliar esse ajuste eu montei uma planilha [rega regra.xls](https://github.com/eduardoaraujo9/gardenberry/raw/master/regra%20rega.xlsx) que simula o cálculo e facilita a visualização dos valores que serão obtidos para cada faixa de temperatura / umidade.
+A parte complexa, além de definir o tempo padrão de rega, é efetuar o ajuste fino do step e valor de start dos modificadores. Para auxiliar esse ajuste eu montei uma planilha [rega regra.xls](https://github.com/eduardoaraujo9/gardenberry/raw/master/regra%20rega.xlsx) que simula o cálculo e facilita a visualização dos valores que serão obtidos para cada faixa de temperatura / umidade. O tempo padrão de rega eu defini ligando o relé e cronometrando quantos segundos eu julguei suficiente para uma rega "básica".
 
 ## Configuração
 
@@ -26,6 +26,7 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
     "pass":"gardenberry",
     "db":"gardenberry"
   },
+  
   "gpio":{
     "sensor":[
       "3"
@@ -35,6 +36,7 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
       "4"
     ]
   },
+  
   "rega":{
     "tempo":"60",
     "maximo":"600",
@@ -42,6 +44,7 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
       "step":"3",
       "start":"0"
     },
+    
     "umidade":{
       "step":"3",
       "start":"-15"
