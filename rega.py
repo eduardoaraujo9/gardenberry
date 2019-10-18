@@ -31,8 +31,7 @@ def rega(tempo):
 	sql.execute("INSERT IGNORE INTO gardenberry.regas (datahora, tempo) VALUES (NOW(), " + tempo + ");")
 	print("Regou: " + tempo + " seg")
 
-#try:
-if True:
+try:
 	if dt.hour < 12:
 		sql.execute("SELECT ROUND(AVG(temperatura),3) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW();")
 		r = sql.fetchone()
@@ -106,6 +105,6 @@ if True:
 	if t < 5:
 		t = 0
 	rega(str(t))
-#except sql.Error as error:
-#	print("Error: {}".format(error))
+except sql.Error as error:
+	print("Error: {}".format(error))
 
