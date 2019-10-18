@@ -29,11 +29,11 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
   
   "gpio":{
     "sensor":[
-      "3"
+      "31"
     ],
     "rele":[
-      "2",
-      "4"
+      "27",
+      "28"
     ]
   },
   
@@ -53,16 +53,23 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
 }
 ```
 
-**api**: configurações da API do climatempo, (id) corresponde ao locale. Suporte a multiplos tokens.
+- **api**: Configurações da API do climatempo, suporta multiplos tokens/IDs:
+  - **id**: Corresponde ao locale ID;
+  - **token**: Token correspondente ao locale ID.
+- **mysql**: Configurações do banco de dados mysql, bem intuitiva.
+- **gpio**: Portas GPIO do Raspberry:
+  - **sensor**: Sensor(es) de temperatura;
+  - **rele**: Porta(s) dos relés que serão ativadas.
+- **rega**: Configurações da rega:
+  - **tempo**: Tempo padrão de rega em segundos;
+  - **maximo**: Tempo limite para rega;
+  - **temperatura**: Passo de *step/start* para o multiplicador do tempo de rega com base na temperatura.
+  - **umidade**: Passo de *step/start* para o multiplicador do tempo de rega com base na umidade.
+  
+*Para desabilitar os modificadores é só utilizar `start 100` e `step 0`*
 
-**mysql**: configurações do banco de dados mysql
-
-**gpio**: configurações do numero de porta do sensor de temperatura + umidade e das portas dos relés que serão ativados.
-
-**rega**: (tempo) tempo em segundos padrão de rega; (maximo) tempo limite para rega; (step) incremento no tempo com base na temperatura/umidade; (start) valor inicial para parametrização de variação temporal da rega com base na temperatura/umidade. Para desabilitar os modificadores é só utilizar `start 100` e `step 0`
-
-**crontab:** é preciso configurar os scripts para execução na crontab.
-```
+### Crontab: é preciso agendar a execução os scripts que compõe o sistema.
+```bash
 0 1 * * * /home/pi/gardenberry/previsao.py
 1 * * * * /home/pi/gardenberry/tempo.py
 5 6,18 * * * /home/pi/gardenberry/rega.py
