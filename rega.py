@@ -99,6 +99,7 @@ try:
 		t = int(float(t) * modt1/100 * modu1/100 * modt2/100)
 		t = t - int(r["rega"])
 		
+		print("debug")
 		print("t\tconf.t\tm_t1\tm_u1\tm_t2\tm_f")
 		print(str(t) + "\t" + str(config["rega"]["tempo"]) + "\t" + str(modt1) + "\t" + str(modu1) + "\t" + str(modt2) + "\t" + str(modf))
 		print(r)
