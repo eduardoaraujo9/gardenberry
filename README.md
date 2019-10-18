@@ -6,11 +6,11 @@ Compor um projeto simples para meu Raspberry efetuar regas automáticas no jardi
 
 A temperatura futura funciona como um multiplicador que modifica o tempo de rega padrão, mais calor regará por mais tempo e um clima ameno regará por menos tempo. A umidade também causa o mesmo princípio.
 
-A parte complexa, alem de definir o tempo padrao de rega, e efetuar o ajuste fino do step e valor de start dos modificadores, para auxiliar a simulacao montei uma planilha `rega regra.xls` que simula o calculo e a visualizacao dos valores que serao obtidos para cada faixa de temperatura / umidade.
+A parte complexa, além de definir o tempo padrão de rega, é efetuar o ajuste fino do step e valor de start dos modificadores. Para auxiliar esse ajuste eu montei uma planilha [rega regra.xls](https://github.com/eduardoaraujo9/gardenberry/raw/master/regra%20rega.xlsx) que simula o cálculo e facilita a visualização dos valores que serão obtidos para cada faixa de temperatura / umidade. O tempo padrão de rega eu defini ligando o relé e cronometrando quantos segundos eu julguei suficiente para uma rega "básica".
 
 ## Configuração
 
-Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as temperaturas e previsões próximas de casa, e tem a configuração definida no arquivo `.config.json`
+Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando multiplos ids/tokens) para triangular as temperaturas e previsões próximas de casa, e tem a configuração definida no arquivo `.config.json`
 ```json
 {
   "api":[
@@ -26,13 +26,17 @@ Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as 
     "pass":"gardenberry",
     "db":"gardenberry"
   },
+  
   "gpio":{
-    "sensor":"3",
+    "sensor":[
+      "31"
+    ],
     "rele":[
-      "2",
-      "4"
+      "27",
+      "28"
     ]
   },
+  
   "rega":{
     "tempo":"60",
     "maximo":"600",
@@ -40,6 +44,7 @@ Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as 
       "step":"3",
       "start":"0"
     },
+    
     "umidade":{
       "step":"3",
       "start":"-15"
@@ -48,16 +53,23 @@ Utiliza a api do climatempo (aceitando multiplos ids/tokens) para triangular as 
 }
 ```
 
-**api**: configurações da API do climatempo, (id) corresponde ao locale. Suporte a multiplos tokens.
+- **api**: Configurações da API do climatempo, suporta multiplos tokens/IDs:
+  - **id**: Corresponde ao locale ID;
+  - **token**: Token correspondente ao locale ID.
+- **mysql**: Configurações do banco de dados mysql, bem intuitiva.
+- **gpio**: Portas GPIO do Raspberry:
+  - **sensor**: Sensor(es) de temperatura;
+  - **rele**: Porta(s) dos relés que serão ativadas.
+- **rega**: Configurações da rega:
+  - **tempo**: Tempo padrão de rega em segundos;
+  - **maximo**: Tempo limite para rega;
+  - **temperatura**: Passo de *step/start* para o multiplicador do tempo de rega com base na temperatura.
+  - **umidade**: Passo de *step/start* para o multiplicador do tempo de rega com base na umidade.
+  
+*Para desabilitar os modificadores é só utilizar `start 100` e `step 0`*
 
-**mysql**: configurações do banco de dados mysql
-
-**gpio**: configurações do numero de porta do sensor de temperatura + umidade e das portas dos relés que serão ativados.
-
-**rega**: (tempo) tempo em segundos padrão de rega; (maximo) tempo limite para rega; (step) incremento no tempo com base na temperatura/umidade; (start) valor inicial para parametrização de variação temporal da rega com base na temperatura/umidade. Para desabilitar os modificadores é só utilizar `start 100` e `step 0`
-
-**crontab:** é preciso configurar os scripts para execução na crontab.
-```
+### Crontab: é preciso agendar a execução os scripts que compõe o sistema.
+```bash
 0 1 * * * /home/pi/gardenberry/previsao.py
 1 * * * * /home/pi/gardenberry/tempo.py
 5 6,18 * * * /home/pi/gardenberry/rega.py
