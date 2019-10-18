@@ -6,7 +6,7 @@ Compor um projeto simples para meu Raspberry efetuar regas automáticas no jardi
 
 A temperatura futura funciona como um multiplicador que modifica o tempo de rega padrão, mais calor regará por mais tempo e um clima ameno regará por menos tempo. A umidade também causa o mesmo princípio.
 
-A parte complexa, alem de definir o tempo padrao de rega, e efetuar o ajuste fino do step e valor de start dos modificadores, para auxiliar a simulacao montei uma planilha `rega regra.xls` que simula o calculo e a visualizacao dos valores que serao obtidos para cada faixa de temperatura / umidade.
+A parte complexa, alem de definir o tempo padrao de rega, e efetuar o ajuste fino do step e valor de start dos modificadores, para auxiliar a simulacao montei uma planilha [rega regra.xls](https://github.com/eduardoaraujo9/gardenberry/raw/master/regra%20rega.xlsx) que simula o calculo e a visualizacao dos valores que serao obtidos para cada faixa de temperatura / umidade.
 
 ## Configuração
 
