@@ -4,9 +4,9 @@
 
 Compor um projeto simples para meu Raspberry efetuar regas automáticas no jardim com base na previsão do tempo (e no estado atual do tempo).
 
-A temperatura futura funciona como um multiplicador que modifica o tempo de rega padrão, mais calor regará por mais tempo e um clima ameno regará por menos tempo. A umidade também causa o mesmo princípio.
+A previsão da temperatura funciona como um multiplicador que modifica o tempo de rega padrão, mais calor regará por mais tempo e um clima ameno regará por menos tempo. A umidade também causa o mesmo princípio.
 
-A parte complexa, além de definir o tempo padrão de rega, é efetuar o ajuste fino do step e valor de start dos modificadores. Para auxiliar esse ajuste eu montei uma planilha [rega regra.xls](https://github.com/eduardoaraujo9/gardenberry/raw/master/regra%20rega.xlsx) que simula o cálculo e facilita a visualização dos valores que serão obtidos para cada faixa de temperatura / umidade. O tempo padrão de rega eu defini ligando o relé e cronometrando quantos segundos eu julguei suficiente para uma rega "básica".
+A parte complexa, além de definir o tempo padrão de rega, é efetuar o ajuste fino do step e valor de start dos modificadores. Para auxiliar esse ajuste eu montei uma planilha [rega regra.xls](https://github.com/eduardoaraujo9/gardenberry/raw/master/regra%20rega.xlsx) que simula o cálculo e facilita a visualização dos valores que serão obtidos para cada faixa de temperatura / umidade. O tempo padrão de rega eu defini ligando o relé e cronometrando quantos segundos foram suficientes para uma rega "básica".
 
 ## Configuração
 
@@ -41,8 +41,8 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
     "tempo":"60",
     "maximo":"600",
     "temperatura":{
-      "step":"3",
-      "start":"0"
+      "step":"2",
+      "start":"20"
     },
     
     "umidade":{
@@ -53,9 +53,9 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
 }
 ```
 
-- **api**: Configurações da API do climatempo, suporta multiplos tokens/IDs:
+- **api**: Configurações da API do climatempo, suporta multiplos tokens e IDs:
   - **id**: Corresponde ao locale ID;
-  - **token**: Token correspondente ao locale ID.
+  - **token**: Token com permissão de consulta ao locale ID.
 - **mysql**: Configurações do banco de dados mysql, bem intuitiva.
 - **gpio**: Portas GPIO do Raspberry:
   - **sensor**: Sensor(es) de temperatura;
@@ -63,12 +63,12 @@ Utiliza a [API do Climatempo](https://advisor.climatempo.com.br/) (aceitando mul
 - **rega**: Configurações da rega:
   - **tempo**: Tempo padrão de rega em segundos;
   - **maximo**: Tempo limite para rega;
-  - **temperatura**: Passo de *step/start* para o multiplicador do tempo de rega com base na temperatura.
+  - **temperatura**: Passo de *step/start* para o multiplicador do tempo de rega com base na temperatura;
   - **umidade**: Passo de *step/start* para o multiplicador do tempo de rega com base na umidade.
   
-*Para desabilitar os modificadores é só utilizar `start 100` e `step 0`*
+*Para desabilitar os modificadores de rega é só utilizar `start 100` e `step 0`*
 
-### Crontab: é preciso agendar a execução os scripts que compõe o sistema.
+### Crontab: é preciso agendar a execução os scripts que compõe o sistema:
 ```bash
 0 1 * * * /home/pi/gardenberry/previsao.py
 1 * * * * /home/pi/gardenberry/tempo.py
