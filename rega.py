@@ -86,10 +86,12 @@ try:
 	elif float(r["fut_precipitacoes"]) < 1.6 and float(r["precipitacoes"]) < 1.6:
 		modf = float(1)
 	else:
-		sql.execute("SELECT ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 71 HOUR) AND NOW()),0),0) AS rega;")
-		r = sql.fetchone()
-		if int(r[0]) == 0:
+		sql.execute("SELECT ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 47 HOUR) AND NOW()),0),0) AS rega;")
+		r2 = sql.fetchone()
+		if int(r2[0]) < 60:
 			modf = 0.7
+		else:
+			modf = 0.4
 
 	if modf > 0:
 		t = int(config["rega"]["tempo"])
@@ -102,6 +104,7 @@ try:
 		print("t\tconf.t\tm_t1\tm_u1\tm_t2\tm_f")
 		print(str(t) + "\t" + str(config["rega"]["tempo"]) + "\t" + str(modt1) + "\t" + str(modu1) + "\t" + str(modt2) + "\t" + str(modf))
 		print(r)
+
 	if t < 5:
 		t = 0
 	rega(str(t))
