@@ -7,6 +7,7 @@ import os
 import RPi.GPIO as GPIO
 import time
 import datetime
+import argparse
 
 filename = inspect.getframeinfo(inspect.currentframe()).filename
 path = os.path.dirname(os.path.abspath(filename))
@@ -16,6 +17,10 @@ config = json.loads(configFile.read())
 
 conn = mysql.connect(host=config["mysql"]["host"],user=config["mysql"]["user"],password=config["mysql"]["pass"],database=config["mysql"]["db"])
 sql = conn.cursor(buffered=True)
+
+parser = argparse.ArgumentParser(description='Forcar tempo de rega')
+parser.add_argument('-force', metavar='N', type=int, help='regar por N segundos')
+args = parser.parse_args()
 
 dt = datetime.datetime.now()
 
@@ -107,6 +112,12 @@ try:
 
 	if t < 5:
 		t = 0
+	try:
+	        if args.force > 0:
+			t = args.force
+	except:
+        	nothing = True
+
 	rega(str(t))
 except sql.Error as error:
 	print("Error: {}".format(error))
