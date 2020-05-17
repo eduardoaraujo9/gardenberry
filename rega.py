@@ -77,7 +77,7 @@ try:
 		sql.execute("SELECT ROUND(AVG(precipitacao),1) AS precipitacoes,ROUND(AVG(temperatura) +" + str(desvio_padrao2) + ",1) AS temperaturas, ROUND(AVG(umidade),0) AS umidades, \
 			(SELECT ROUND(AVG(precipitacao),1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)) AS fut_precipitacoes, \
 			(SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)) AS fut_temperaturas, \
-			ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 8 HOUR) AND NOW()),0),0) AS rega \
+			ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 10 HOUR) AND NOW()),0),0) AS rega \
 			FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW();")
 
 	r = sql.fetchone()
