@@ -38,45 +38,45 @@ def rega(tempo):
 
 try:
 	if dt.hour < 12:
-		sql.execute("SELECT ROUND(AVG(temperatura),3) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW();")
+		sql.execute("SELECT IFNULL(ROUND(AVG(temperatura),3),22) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW();")
 		r = sql.fetchone()
 		media = float(r[0])
-		sql.execute("SELECT ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW() ) AS dp;")
+		sql.execute("SELECT IFNULL(ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2),0) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW() ) AS dp;")
 		r = sql.fetchone()
 		desvio_padrao = float(r[0])
 
-		sql.execute("SELECT ROUND(AVG(temperatura),3) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND DATE_SUB(NOW(), INTERVAL 12 HOUR);")
+		sql.execute("SELECT IFNULL(ROUND(AVG(temperatura),3),22) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND DATE_SUB(NOW(), INTERVAL 12 HOUR);")
 		r = sql.fetchone()
 		media = float(r[0])
-		sql.execute("SELECT ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND DATE_SUB(NOW(), INTERVAL 12 HOUR) ) AS dp;")
+		sql.execute("SELECT IFNULL(ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2),0) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND DATE_SUB(NOW(), INTERVAL 12 HOUR) ) AS dp;")
 		r = sql.fetchone()
 		desvio_padrao2 = float(r[0])
 
-		sql.execute("SELECT ROUND(AVG(precipitacao),1) AS precipitacoes, \
-			(SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao2) + ",1) FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND DATE_SUB(NOW(), INTERVAL 12 HOUR)) AS temperaturas, \
-			ROUND(AVG(umidade),0) AS umidades, \
-			(SELECT ROUND(AVG(precipitacao),1) FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW()) AS fut_precipitacoes, \
-			(SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW()) AS fut_temperaturas, \
+		sql.execute("SELECT IFNULL(ROUND(AVG(precipitacao),1),0) AS precipitacoes, \
+			IFNULL((SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao2) + ",1) FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND DATE_SUB(NOW(), INTERVAL 12 HOUR)),22) AS temperaturas, \
+			IFNULL(ROUND(AVG(umidade),0),80) AS umidades, \
+			IFNULL((SELECT ROUND(AVG(precipitacao),1) FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW()),0) AS fut_precipitacoes, \
+			IFNULL((SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW()),22) AS fut_temperaturas, \
 			ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 16 HOUR) AND NOW()),0),0) AS rega \
 			FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 12 HOUR) AND NOW();")
 
 	else:
-		sql.execute("SELECT ROUND(AVG(temperatura),3) AS media FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 24 HOUR);")
+		sql.execute("SELECT IFNULL(ROUND(AVG(temperatura),3),22) AS media FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 24 HOUR);")
 		r = sql.fetchone()
 		media = float(r[0])
-		sql.execute("SELECT ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 24 HOUR) ) AS dp;")
+		sql.execute("SELECT IFNULL(ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2),0) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 24 HOUR) ) AS dp;")
 		r = sql.fetchone()
 		desvio_padrao = float(r[0])
 
-		sql.execute("SELECT ROUND(AVG(temperatura),3) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW();")
+		sql.execute("SELECT IFNULL(ROUND(AVG(temperatura),3),22) AS media FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW();")
 		r = sql.fetchone()
 		media = float(r[0])
-		sql.execute("SELECT ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW() ) AS dp;")
+		sql.execute("SELECT IFNULL(ROUND(SQRT(SUM(v)/(COUNT(v)-1)),2),0) AS desvio_padrao FROM ( SELECT temperatura, ROUND((" + str(media) + " -temperatura)*(" + str(media) + " -temperatura),2) AS v FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW() ) AS dp;")
 		r = sql.fetchone()
 		desvio_padrao2 = float(r[0])
-		sql.execute("SELECT ROUND(AVG(precipitacao),1) AS precipitacoes,ROUND(AVG(temperatura) +" + str(desvio_padrao2) + ",1) AS temperaturas, ROUND(AVG(umidade),0) AS umidades, \
-			(SELECT ROUND(AVG(precipitacao),1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)) AS fut_precipitacoes, \
-			(SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)) AS fut_temperaturas, \
+		sql.execute("SELECT IFNULL(ROUND(AVG(precipitacao),1),0) AS precipitacoes,IFNULL(ROUND(AVG(temperatura) +" + str(desvio_padrao2) + ",1),22) AS temperaturas, IFNULL(ROUND(AVG(umidade),0),80) AS umidades, \
+			IFNULL((SELECT ROUND(AVG(precipitacao),1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)),0) AS fut_precipitacoes, \
+			IFNULL((SELECT ROUND(AVG(temperatura) +" + str(desvio_padrao) + ",1) FROM gardenberry.previsao WHERE datahora BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 12 HOUR)),22) AS fut_temperaturas, \
 			ROUND(IFNULL((SELECT SUM(tempo) FROM gardenberry.regas WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 10 HOUR) AND NOW()),0),0) AS rega \
 			FROM gardenberry.tempo WHERE datahora BETWEEN DATE_SUB(NOW(), INTERVAL 24 HOUR) AND NOW();")
 
