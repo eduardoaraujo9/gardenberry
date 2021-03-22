@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import RPi.GPIO as GPIO
-import argparse
 import cgi
 import cgitb 
 
